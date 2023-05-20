@@ -1,13 +1,13 @@
-#include "Barco.hpp"
+#include "Boat.hpp"
 
 
-Barco::Barco(int pos_x, int pos_y)
+Boat::Boat(int pos_x, int pos_y)
 {
     this->_pos_x = pos_x;
     this->_pos_y = pos_y;
 }
 
-void Barco::move(bool orientation, bool direction) 
+void Boat::move(bool orientation, bool direction) 
 {
     // Direção do barco
     // True -> Vertical

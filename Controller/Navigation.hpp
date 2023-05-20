@@ -1,16 +1,16 @@
-#ifndef  _NAVIGATION_CPP_
-#define _NAVIGATION_CPP_
+#ifndef _NAVIGATION_HPP_
+#define _NAVIGATION_HPP_
 
-#include "../Barco/Barco.hpp"
+#include "../Boat/Boat.hpp"
 #include "../Map/Map.hpp"
 
 class Navigation
 {
     private:
-        Map   _map;
-        Barco _barco;
+        Map*  _map;
+        Boat* _boat;
     public:
-        Navigation(Map map, Barco Barco);
+        Navigation(Map *map, Boat *Barco);
 };
 
 #endif

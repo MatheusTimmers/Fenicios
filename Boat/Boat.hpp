@@ -1,12 +1,16 @@
+#ifndef _BOAT_HPP_
+#define _BOAT_HPP_
 
-
-class Barco
+class Boat
 {
     private:
         int _pos_x;
         int _pos_y;
         int _fuel;
     public:
-        Barco(int pos_x, int pos_y);
+        Boat(int pos_x, int pos_y);
         void move(bool orientation, bool direction);
 };
+
+
+#endif
