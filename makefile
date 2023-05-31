@@ -12,3 +12,9 @@ debug:
 run:
 	@echo rodando
 	./run.exe;
+
+mainLinux:
+	@echo Compilando
+	@g++ main.cpp File/File.cpp Utils/Utils.cpp Map/Map.cpp Boat/Boat.cpp Graph/Graph.cpp -o run.exe
+	./run.exe
+

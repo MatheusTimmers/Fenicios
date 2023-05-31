@@ -5,7 +5,6 @@
 #include "Map/Map.hpp"
 #include "Controller/Navigation.hpp"
 
-
 int main()
 {
     // Timer
@@ -17,15 +16,16 @@ int main()
     int x = 0;
     int y = 0;
     vector<string> stringMap;
-    
+
     // Pega o Arquivo
     File *file = new File("case0.map");
-    infoLine   = file->GetLine();
-    stringMap  = file->GetLines();
+    infoLine = file->GetLine();
+    stringMap = file->GetLines();
 
     // Map
-    Map  *map  = new Map(stoi(infoLine[0]), stoi(infoLine[1]), &stringMap);
+    Map *map = new Map(stoi(infoLine[0]), stoi(infoLine[1]), &stringMap);
     map->SearchBoat(&x, &y);
+    map->ToGraph();
 
     // Boat
     Boat *boat = new Boat(x, y);
