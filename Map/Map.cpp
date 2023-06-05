@@ -33,7 +33,7 @@ Graph *Map::ToGraph()
 {
     int generalIndex = 0;
     int totalSize = this->_size_x * this->_size_y;
-    Edge edges[totalSize * 4];
+    Node nodes[totalSize];
     //     =
     // {
     //     // (x, y, w) —> aresta de `x` a `y` tendo peso `w`
@@ -45,38 +45,50 @@ Graph *Map::ToGraph()
     {
         for (int j = 0; j <= this->_size_y; j++)
         {
-            //@MatheusTimmers te vira pra entender
-            // vou tentar
-            // @GabiHert, não acredito que tu criou uma classe para o graph, vagabundo
-            // copiei da internet
-            // beleza, tava vendo, acho que realmente é necessario mesmo
-            // man na real eu acho q n vai dar certo essa merda
-            // Eu tava fazendo q cada ponto do mapa era um nodo do grafo. Dai se for terra tem peso infinito, se for agua ou porto tem peso 1. Ai depois fazemos o caminhento la da aula passada pra calcular o menor caminho de um porto ate o outro
-            // tendi, faz sentido boa
 
-            int weight = this->_map->at(i)[j] == '*' ? 100 : 1;
             if (generalIndex == totalSize)
             {
                 break;
             }
 
+            if (this->_map->at(i)[j] == '*')
+            {
+                continue;
+            }
+
+            Node edge = {};
+
             if (generalIndex > this->_size_x)
             {
-                // todo: atribui edge ao nodo de cima
-                edges[generalIndex] = {generalIndex, generalIndex - this->_size_x};
+                // atribui edge ao nodo de cima
+                int topEdgeIndex = generalIndex - this->_size_x;
+                edge.top = &edges[topEdgeIndex];
+                edge.topWeight = 1;
             }
 
             if (generalIndex % this->_size_x)
             {
-                // todo: atribui edge da direita
-                edges[generalIndex + 1] = {generalIndex, generalIndex + 1};
+                // atribui edge da direita
+                int rightEdgeIndex = generalIndex + 1;
+                edge.right = &edges[rightEdgeIndex];
+                edge.rightWeight = 1;
             }
 
             if ((generalIndex - 1) % this->_size_x)
             {
-                edges[generalIndex - 1] = {generalIndex, generalIndex - 1};
+                // atribui edge da esquerda
+                int leftEdgeIndex = generalIndex - 1;
+                edge.left = &edges[leftEdgeIndex];
+                edge.leftWeight = 1;
             }
-            edges[i * j] = {generalIndex, 0, 0};
+
+            if (generalIndex < (totalSize - this->_size_x))
+            {
+                // atribui edge de baixo
+                int bottomEdgeIndex = (generalIndex + this->_size_x);
+                edge.bottom = &edges[bottomEdgeIndex];
+                edge.bottomWeight = 1;
+            }
 
             generalIndex++;
         }
