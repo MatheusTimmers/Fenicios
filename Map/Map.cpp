@@ -34,10 +34,6 @@ void Map::SearchBoat(int *x, int *y)
     }
 }
 
-void Map::CreateMap(vector<string> *map)
-{
-}
-
 WeightedQuadgraph *Map::ToGraph()
 {
     WeightedQuadgraph *graph = new WeightedQuadgraph(this->_size_x, this->_size_y);
