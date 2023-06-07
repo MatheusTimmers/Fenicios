@@ -3,19 +3,28 @@
 using namespace std;
 
 // Constructor
-WeightedQuadgraph::WeightedQuadgraph(int numVertices)
+WeightedQuadgraph::WeightedQuadgraph(int x, int y)
 {
-    cout << "numVertices = " << numVertices << endl;
-    this->numVertices = numVertices;
-    adjacencyList.resize(numVertices);
+    this->x = x;
+    this->y = y;
+
+    this->adjacencyList.resize(y);
+    cout << "DONE" << endl;
+
+    for (int i = 0; i < y; i++)
+    {
+        this->adjacencyList.at(i).resize(x);
+    }
+    cout << "DONE" << endl;
 }
 
 // Add an edge to the graph
-void WeightedQuadgraph::addEdge(int source, int destination, string destinationValue, int weight)
+void WeightedQuadgraph::addEdge(Dot source, Dot destination, string destinationValue, int weight)
 {
-    cout << "addEdge(" << source << ", " << destination << ", " << weight << ")" << endl;
+    cout << "addEdge(" << source.x << ", " << source.y << ", " << destination.x << ", " << destination.y << ", " << weight << ")" << endl;
     Edge edge = {destination, weight, destinationValue};
-    adjacencyList[source].push_back(edge);
+    cout << adjacencyList.size() << endl;
+    adjacencyList[source.y][source.x].push_back(edge);
     cout << "added" << endl;
 }
 
@@ -23,13 +32,20 @@ void WeightedQuadgraph::addEdge(int source, int destination, string destinationV
 void WeightedQuadgraph::printGraph()
 {
     cout << "PRINT" << endl;
-    for (int i = 0; i < numVertices; i++)
+
+    for (int i = 0; i < this->y; i++)
     {
-        std::cout << "Vertex " << i << " --> ";
-        for (const Edge &edge : adjacencyList[i])
+        for (int j = 0; j < this->x; j++)
         {
-            std::cout << "(" << edge.destination << ", " << edge.weight << ", " << edge.destinationValue << ") ";
+            std::cout << "Vertex " << i << " x " << j << " --> ";
+
+            for (const Edge &edge : this->adjacencyList.at(i).at(j))
+            {
+                std::cout << "(" << edge.destination.x << ", " << edge.destination.y << ", " << edge.weight << ", " << edge.destinationValue << ") ";
+
+                std::cout << std::endl;
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
     }
 }

@@ -4,12 +4,13 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "../Dot/Dot.hpp"
 using namespace std;
 
 // Structure to represent an edge in the graph
 struct Edge
 {
-    int destination;
+    Dot destination;
     int weight;
     string destinationValue;
 };
@@ -18,16 +19,18 @@ struct Edge
 class WeightedQuadgraph
 {
 private:
-    int numVertices;
-    std::vector<std::vector<Edge>> adjacencyList;
+    int x;
+    int y;
+
+    std::vector<std::vector<std::vector<Edge>>> adjacencyList;
 
 public:
     // Constructor
-    WeightedQuadgraph(int numVertices);
+    WeightedQuadgraph(int x, int y);
     WeightedQuadgraph(){};
 
     // Add an edge to the graph
-    void addEdge(int source, int destination, string destinationValue, int weight);
+    void addEdge(Dot source, Dot destination, string destinationValue, int weight);
 
     // Print the graph
     void printGraph();

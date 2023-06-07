@@ -1,27 +1,29 @@
 #include "Map.hpp"
 #include "../Graph/Graph.hpp"
+#include "../Dot/Dot.hpp"
 #include <vector>
 #include <string>
+
 using namespace std;
 #ifndef MAP
 #define MAP
 Map::Map(int size_y, int size_x, vector<string> *map)
 {
 
-    this->_size_x = size_x - 1;
-    this->_size_y = size_y - 1;
+    this->_size_x = size_x;
+    this->_size_y = size_y;
     this->_map = map;
 }
 
 void Map::SearchBoat(int *x, int *y)
 {
 
-    for (int i = 1; i < this->_map->size(); i++)
+    for (int j = 1; j < this->_map->size(); j++)
     {
-        for (int j = 1; j < this->_map->at(i).size(); j++)
+        for (int i = 1; i < this->_map->at(j).size(); i++)
         {
             // Procura o primeiro porto do Mapa;
-            if (this->_map->at(i)[j] == '1')
+            if (this->_map->at(j)[i] == '1')
             {
                 *x = i;
                 *y = j;
@@ -38,70 +40,73 @@ void Map::CreateMap(vector<string> *map)
 
 WeightedQuadgraph *Map::ToGraph()
 {
-    int generalIndex = 0;
-    int totalSize = (this->_size_x) * (this->_size_y);
-    WeightedQuadgraph *graph = new WeightedQuadgraph(totalSize);
+    WeightedQuadgraph *graph = new WeightedQuadgraph(this->_size_x, this->_size_y);
 
-    for (int i = 0; i < this->_size_x; i++)
+    for (int y = 1; y < this->_size_y; y++)
     {
-        for (int j = 0; j < this->_size_y; j++)
+        for (int x = 0; x < this->_size_x; x++)
         {
 
-            string value = string(1, this->_map->at(i)[j]);
+            string value = string(1, this->_map->at(y)[x]);
             cout << value << endl;
 
+            Dot source;
+            source.x = x;
+            source.y = y;
+
             int weight = 1;
-            // if (this->_map->at(i)[j] == '*')
+            // if (this->_map->at(y)[x] == '*')
             // {
             //     continue;
             // }
-            if (generalIndex == totalSize)
-            {
-                cout << "BREAK" << endl;
-                break;
-            }
 
-            if (generalIndex > this->_size_x)
+            if (y > 1)
             {
                 // atribui edge ao nodo de cima
                 cout << "top" << endl;
-                int topEdgeIndex = generalIndex - this->_size_x;
-                graph->addEdge(generalIndex, topEdgeIndex, value, weight);
+                value = string(1, this->_map->at(y - 1)[x]);
+                Dot destination;
+                destination.x = x;
+                destination.y = y - 1;
+                graph->addEdge(source, destination, value, weight);
             }
 
-            if (!(generalIndex % this->_size_x))
+            if (x + 1 < this->_size_x)
             {
-
                 // atribui edge da direita
-                cout << "right" << endl;
+                cout << "right " << x << endl;
 
-                int rightEdgeIndex = generalIndex + 1;
-                graph->addEdge(generalIndex, rightEdgeIndex, value, weight);
+                value = string(1, this->_map->at(y)[x + 1]);
+                Dot destination;
+                destination.x = x + 1;
+                destination.y = y;
+                graph->addEdge(source, destination, value, weight);
             }
 
-            if (generalIndex > this->_size_x && (generalIndex - 1) % this->_size_x)
+            if (x > 0)
             {
-
                 // atribui edge da esquerda
                 cout << "left" << endl;
-
-                int leftEdgeIndex = generalIndex - 1;
-                graph->addEdge(generalIndex, leftEdgeIndex, value, weight);
+                value = string(1, this->_map->at(y)[x - 1]);
+                Dot destination;
+                destination.x = x - 1;
+                destination.y = y;
+                graph->addEdge(source, destination, value, weight);
             }
 
-            if (generalIndex < (totalSize - this->_size_x))
+            if (y < this->_size_y)
             {
                 // atribui edge de baixo
                 cout << "bottom" << endl;
-
-                int bottomEdgeIndex = (generalIndex + this->_size_x);
-                graph->addEdge(generalIndex, bottomEdgeIndex, value, weight);
+                value = string(1, this->_map->at(y + 1)[x]);
+                Dot destination;
+                destination.x = x;
+                destination.y = y + 1;
+                graph->addEdge(source, destination, value, weight);
             }
-
-            generalIndex++;
         }
     }
-    cout << "OUT" << endl;
+    // cout << "OUT" << endl;
 
     graph->printGraph();
     return graph;

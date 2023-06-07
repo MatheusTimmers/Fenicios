@@ -1,4 +1,0 @@
-struct Dot
-{
-    bool isWater;
-};
