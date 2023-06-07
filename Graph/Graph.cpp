@@ -21,7 +21,7 @@ WeightedQuadgraph::WeightedQuadgraph(int x, int y)
 // Add an edge to the graph
 void WeightedQuadgraph::addEdge(Dot source, Dot destination, string destinationValue, int weight)
 {
-    cout << "addEdge(" << source.x << ", " << source.y << ", " << destination.x << ", " << destination.y << ", " << weight << ")" << endl;
+    cout << "addEdge(" << source.x << ", " << source.y << ", " << destination.x << ", " << destination.y << ", " << destinationValue << ", " << weight << ")" << endl;
     Edge edge = {destination, weight, destinationValue};
     cout << adjacencyList.size() << endl;
     adjacencyList[source.y][source.x].push_back(edge);

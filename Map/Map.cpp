@@ -42,66 +42,85 @@ WeightedQuadgraph *Map::ToGraph()
 {
     WeightedQuadgraph *graph = new WeightedQuadgraph(this->_size_x, this->_size_y);
 
-    for (int y = 1; y < this->_size_y; y++)
+    for (int y = 1; y <= this->_size_y; y++)
     {
         for (int x = 0; x < this->_size_x; x++)
         {
+            // cout << this->_size_y << " X " << this->_size_x << endl;
+            // cout << y << " X " << x << endl;
+            // cout << this->_map->at(y) << endl;
 
             string value = string(1, this->_map->at(y)[x]);
-            cout << value << endl;
+            if (!(int)value[0])
+            {
+                cout << "break" << endl;
+                break;
+            }
+
+            string valueTop = string(1, this->_map->at(y - 1)[x]);
+
+            string valueBottom = y == this->_size_y ? "" : string(1, this->_map->at(y + 1)[x]);
+
+            string valueLeft = string(1, this->_map->at(y)[x - 1]);
+
+            string valueRight = string(1, this->_map->at(y)[x + 1]);
 
             Dot source;
             source.x = x;
-            source.y = y;
+            // - 1 para que o seja salvo no grafo a partir do index 0 não 1
+            source.y = y - 1;
 
-            int weight = 1;
             // if (this->_map->at(y)[x] == '*')
-            // {
+            // {c
             //     continue;
             // }
 
-            if (y > 1)
+            if (y > 1 && (int)valueTop[0])
             {
                 // atribui edge ao nodo de cima
-                cout << "top" << endl;
+                int weight = valueTop == "*" ? INFINITY : 1;
+                // cout << "top" << endl;
                 value = string(1, this->_map->at(y - 1)[x]);
                 Dot destination;
                 destination.x = x;
-                destination.y = y - 1;
+                destination.y = y - 2;
                 graph->addEdge(source, destination, value, weight);
             }
 
-            if (x + 1 < this->_size_x)
+            if ((int)valueRight[0])
             {
                 // atribui edge da direita
-                cout << "right " << x << endl;
+                // cout << "right " << x << endl;
+                int weight = valueRight == "*" ? INFINITY : 1;
 
                 value = string(1, this->_map->at(y)[x + 1]);
                 Dot destination;
                 destination.x = x + 1;
-                destination.y = y;
+                destination.y = y - 1;
                 graph->addEdge(source, destination, value, weight);
             }
 
-            if (x > 0)
+            if ((int)valueLeft[0])
             {
                 // atribui edge da esquerda
-                cout << "left" << endl;
+                // cout << "left" << endl;
                 value = string(1, this->_map->at(y)[x - 1]);
+                int weight = valueLeft == "*" ? INFINITY : 1;
                 Dot destination;
                 destination.x = x - 1;
-                destination.y = y;
+                destination.y = y - 1;
                 graph->addEdge(source, destination, value, weight);
             }
 
-            if (y < this->_size_y)
+            if ((int)valueBottom[0])
             {
                 // atribui edge de baixo
-                cout << "bottom" << endl;
+                // cout << "bottom" << endl;
                 value = string(1, this->_map->at(y + 1)[x]);
+                int weight = valueBottom == "*" ? INFINITY : 1;
                 Dot destination;
                 destination.x = x;
-                destination.y = y + 1;
+                destination.y = y;
                 graph->addEdge(source, destination, value, weight);
             }
         }
