@@ -16,7 +16,7 @@ struct Edge
 {
     Dot destination;
     int weight;
-    string destinationValue;
+    char destinationValue;
 };
 
 // Weighted Quadgraph class
@@ -34,7 +34,7 @@ class WeightedQuadgraph
         WeightedQuadgraph(){};
 
         // Add an edge to the graph
-        void addEdge(Dot source, Dot destination, string destinationValue, int weight);
+        void addEdge(Dot source, Dot destination, char destinationValue, int weight);
 
     vector<Edge> getEdges(int x, int y);
     // Print the graph

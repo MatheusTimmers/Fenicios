@@ -17,7 +17,7 @@ WeightedQuadgraph::WeightedQuadgraph(int x, int y)
 }
 
 // Add an edge to the graph
-void WeightedQuadgraph::addEdge(Dot source, Dot destination, string destinationValue, int weight)
+void WeightedQuadgraph::addEdge(Dot source, Dot destination, char destinationValue, int weight)
 {
     //cout << "addEdge(" << source.x << ", " << source.y << ", " << destination.x << ", " << destination.y << ", " << destinationValue << ", " << weight << ")" << endl;
     Edge edge = {destination, weight, destinationValue};
