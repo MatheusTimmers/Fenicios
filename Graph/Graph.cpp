@@ -28,6 +28,15 @@ void WeightedQuadgraph::addEdge(Dot source, Dot destination, string destinationV
     cout << "added" << endl;
 }
 
+vector<Edge> WeightedQuadgraph::getEdges(int x, int y)
+{
+    if (x < this->adjacencyList.size() && y < this->adjacencyList.at(x).size())
+    {
+        return this->adjacencyList.at(x).at(y);
+    }
+    return vector<Edge>();
+}
+
 // Print the graph
 void WeightedQuadgraph::printGraph()
 {

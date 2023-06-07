@@ -32,6 +32,7 @@ public:
     // Add an edge to the graph
     void addEdge(Dot source, Dot destination, string destinationValue, int weight);
 
+    vector<Edge> getEdges(int x, int y);
     // Print the graph
     void printGraph();
 };
