@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "../Graph/Graph.hpp"
+#include <string>
 using namespace std;
 
 struct Pixel
@@ -20,10 +21,10 @@ private:
     int _size_y;
 
 public:
-    Map(int size_x, int size_y, vector<string> *map);
+    Map(int size_y, int size_x, vector<string> *map);
     void SearchBoat(int *x, int *y);
     void CreateMap(vector<string> *map);
-    Graph *ToGraph();
+    WeightedQuadgraph *ToGraph();
 };
 
 #endif

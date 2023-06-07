@@ -18,7 +18,7 @@ int main()
     vector<string> stringMap;
 
     // Pega o Arquivo
-    File *file = new File("case0.map");
+    File *file = new File("caseTest.map");
     infoLine = file->GetLine();
     stringMap = file->GetLines();
 

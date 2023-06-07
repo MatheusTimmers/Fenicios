@@ -1,26 +1,36 @@
+#ifndef WEIGHTED_QUADGRAPH_HPP
+#define WEIGHTED_QUADGRAPH_HPP
+
 #include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
+// Structure to represent an edge in the graph
 struct Edge
 {
+    int destination;
     int weight;
-    Node *node;
+    string destinationValue;
 };
 
-struct Node
+// Weighted Quadgraph class
+class WeightedQuadgraph
 {
-    Edge *left, *right, *top, *bottom;
-};
-
-class Graph
-{
-
 private:
-    Edge **_edge;
-    int _size;
+    int numVertices;
+    std::vector<std::vector<Edge>> adjacencyList;
 
 public:
-    Edge *getEdge(int index);
-    int dijkstra(int startIndex, int endIndex);
-    Graph(Edge *edges[], int size);
+    // Constructor
+    WeightedQuadgraph(int numVertices);
+    WeightedQuadgraph(){};
+
+    // Add an edge to the graph
+    void addEdge(int source, int destination, string destinationValue, int weight);
+
+    // Print the graph
+    void printGraph();
 };
+
+#endif // WEIGHTED_QUADGRAPH_HPP

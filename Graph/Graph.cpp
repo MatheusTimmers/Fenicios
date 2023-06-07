@@ -1,18 +1,35 @@
-#include <iostream>
 #include "Graph.hpp"
+#include <iostream>
 using namespace std;
 
-Graph::Graph(Edge **edges, int size)
+// Constructor
+WeightedQuadgraph::WeightedQuadgraph(int numVertices)
 {
-    this->_edge = edges;
-    this->_size = size;
+    cout << "numVertices = " << numVertices << endl;
+    this->numVertices = numVertices;
+    adjacencyList.resize(numVertices);
 }
 
-Edge *Graph::getEdge(int index)
+// Add an edge to the graph
+void WeightedQuadgraph::addEdge(int source, int destination, string destinationValue, int weight)
 {
-    return this->_edge[index];
+    cout << "addEdge(" << source << ", " << destination << ", " << weight << ")" << endl;
+    Edge edge = {destination, weight, destinationValue};
+    adjacencyList[source].push_back(edge);
+    cout << "added" << endl;
 }
 
-int Graph::dijkstra(int startIndex, int endIndex)
+// Print the graph
+void WeightedQuadgraph::printGraph()
 {
+    cout << "PRINT" << endl;
+    for (int i = 0; i < numVertices; i++)
+    {
+        std::cout << "Vertex " << i << " --> ";
+        for (const Edge &edge : adjacencyList[i])
+        {
+            std::cout << "(" << edge.destination << ", " << edge.weight << ", " << edge.destinationValue << ") ";
+        }
+        std::cout << std::endl;
+    }
 }
