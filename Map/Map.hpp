@@ -21,10 +21,11 @@ private:
     int _size_y;
 
 public:
-    Map(int size_y, int size_x, vector<string> *map);
+    Map(int size_x, int size_y, vector<string> *map);
+    ~Map();
     void SearchBoat(int *x, int *y);
     void CreateMap(vector<string> *map);
-    WeightedQuadgraph *ToGraph();
+    WeightedGraph *ToGraph();
 };
 
 #endif

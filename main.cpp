@@ -18,12 +18,12 @@ int main()
     vector<string> stringMap;
 
     // Pega o Arquivo
-    File *file = new File("caseTest.map");
+    File *file = new File("caseTeste.map");
     infoLine = file->GetLine();
     stringMap = file->GetLines();
 
     // Map
-    Map *map = new Map(stoi(infoLine[0]), stoi(infoLine[1]), &stringMap);
+    Map *map = new Map(stoi(infoLine[1]), stoi(infoLine[0]), &stringMap);
     map->SearchBoat(&x, &y);
     map->ToGraph();
 
@@ -38,6 +38,10 @@ int main()
     double elapsed = double(end - start) / double(CLOCKS_PER_SEC);
 
     cout << "Tempo Total: " << fixed << elapsed << setprecision(5) << endl;
+
+    // Gostou sor, agora temos consciência de memoria (Já tinhamos que ter :P) 
+    delete file;
+    delete map;
 
     return 0;
 }

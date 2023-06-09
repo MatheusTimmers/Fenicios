@@ -41,8 +41,9 @@ vector<string> File::GetLines()
     string line;
     this->OpenRead();
 
-    //posiciona na linha 1, pois é quando começa o mapa
-    this->_file.seekg(1);
+    // Descarta a primeira linha
+    // FIXME: Não é possivel que não tenha um jeito mais correto
+    getline(this->_file, line);
     while(getline(this->_file, line))
     {
         result.push_back(line);

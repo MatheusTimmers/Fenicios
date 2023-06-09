@@ -2,53 +2,78 @@
 #include <iostream>
 using namespace std;
 
-// Constructor
-WeightedQuadgraph::WeightedQuadgraph(int x, int y)
-{
-    this->x = x;
-    this->y = y;
-
-    this->adjacencyList.resize(y);
-
-    for (int i = 0; i < y; i++)
+// Construtor
+WeightedGraph::WeightedGraph(int nVertex)
+{      
+    try
     {
-        this->adjacencyList.at(i).resize(x);
-    }
-}
+        this->_graph = new Graph;
+        this->_graph->nVertex = nVertex; 
+        this->_graph->nArc = 0;
 
-// Add an edge to the graph
-void WeightedQuadgraph::addEdge(Dot source, Dot destination, char destinationValue, int weight)
-{
-    //cout << "addEdge(" << source.x << ", " << source.y << ", " << destination.x << ", " << destination.y << ", " << destinationValue << ", " << weight << ")" << endl;
-    Edge edge = {destination, weight, destinationValue};
-    adjacencyList[source.y][source.x].push_back(edge);
-}
-
-vector<Edge> WeightedQuadgraph::getEdges(int x, int y)
-{
-    if (x < this->adjacencyList.size() && y < this->adjacencyList.at(x).size())
-    {
-        return this->adjacencyList.at(x).at(y);
-    }
-    return vector<Edge>();
-}
-
-// Print the graph
-void WeightedQuadgraph::printGraph()
-{
-    for (int i = 0; i < this->y; i++)
-    {
-        for (int j = 0; j < this->x; j++)
+        this->_graph->adj = new Node*[nVertex];
+        for (vertex v = 0; v < nVertex; v++)
         {
-            cout << "Vertex " << i << " x " << j << " --> ";
-
-            for (const Edge &edge : this->adjacencyList.at(i).at(j))
-            {
-                cout << "(" << edge.destination.x << ", " << edge.destination.y << ", " << edge.weight << ", " << edge.destinationValue << ") ";
-
-                cout << endl;
-            }
-            cout << endl;
+            this->_graph->adj[v] = NULL;
         }
+    }
+    catch(const std::exception& e)
+    {
+        cout << "tESTE" << endl;
+        std::cerr << e.what() << '\n';
+    }
+}
+
+// Destrutor
+WeightedGraph::~WeightedGraph()
+{
+    for (int i = 0; i < this->_graph->nVertex; i++)
+    {
+        delete this->_graph->adj[i];       
+    }
+    delete[] this->_graph->adj;
+}
+
+// Adiciona uma ligação entre dois vertices
+// TODO: Bastante custoso, se tiver bastates nodes
+void WeightedGraph::InsertArc(vertex x, vertex y)
+{   
+    // Verifica se já estão ligados
+    for (Node* n = this->_graph->adj[x]; n != NULL; n = n->next)
+        if (n->x == y) return;
+
+    this->_graph->adj[x] = NewNode(y, this->_graph->adj[x]); 
+    this->_graph->nArc++;
+}
+
+// Cria um novo nodo
+Node* WeightedGraph::NewNode(vertex x, Node *next) 
+{
+    try
+    {
+        Node* node = new Node;
+        node->x = x; 
+        node->next = next;  
+
+        return node;  
+    }
+    catch(const std::bad_alloc& e)
+    {
+        std::cerr << e.what() << '\n';
+    }                       
+}
+
+// Faz o Print
+void WeightedGraph::printGraph()
+{
+    for (int i = 0; i < this->_graph->nVertex; i++)
+    {
+        cout << "Vertex " << i << " --> (";
+        for (Node* n = this->_graph->adj[i]; n != NULL; n = n->next) 
+        {
+            cout << n->x;
+            if (n->next != NULL) cout << ", "; 
+        }
+        cout << ") " << endl;
     }
 }

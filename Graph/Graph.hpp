@@ -1,44 +1,41 @@
-#ifndef WEIGHTED_QUADGRAPH_HPP
-#define WEIGHTED_QUADGRAPH_HPP
+#ifndef WEIGHTED_GRAPH_HPP
+#define WEIGHTED_GRAPH_HPP
 
 #include <iostream>
 #include <vector>
 #include <string>
+#include "../Utils/Utils.hpp"
 using namespace std;
 
-struct Dot
-{
-    int x, y;
+#define vertex int
+
+// Estrutura que representa uma conexão
+struct Node 
+{ 
+   vertex x; 
+   Node *next; 
 };
 
-// Structure to represent an edge in the graph
-struct Edge
+// Estrutura que representa o Grafo
+struct Graph
 {
-    Dot destination;
-    int weight;
-    char destinationValue;
+    int nVertex;
+    int nArc;  
+    Node **adj;
 };
 
-// Weighted Quadgraph class
-class WeightedQuadgraph
+class WeightedGraph
 {
     private:
-        int x;
-        int y;
-
-        vector<vector<vector<Edge>>> adjacencyList;
+        Graph *_graph;
 
     public:
-        // Constructor
-        WeightedQuadgraph(int x, int y);
-        WeightedQuadgraph(){};
+        WeightedGraph(int nVertex);
+        ~WeightedGraph();
 
-        // Add an edge to the graph
-        void addEdge(Dot source, Dot destination, char destinationValue, int weight);
-
-    vector<Edge> getEdges(int x, int y);
-    // Print the graph
-    void printGraph();
+        void  InsertArc(vertex x, vertex y);
+        Node* NewNode(vertex x, Node *next);
+        void  printGraph();
 };
 
-#endif // WEIGHTED_QUADGRAPH_HPP
+#endif // WEIGHTED_GRAPH_HPP
