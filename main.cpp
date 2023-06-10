@@ -25,13 +25,13 @@ int main()
     // Map
     Map *map = new Map(stoi(infoLine[1]), stoi(infoLine[0]), &stringMap);
     map->SearchBoat(&x, &y);
-    map->ToGraph();
 
     // Boat
     Boat *boat = new Boat(x, y);
 
     // Controller
-    // Navigation *nav = new Navigation(map, boat);
+    Navigation *nav = new Navigation(map->ToGraph(), boat);
+    nav->Walk(1);
 
     // End Timer
     end = clock();

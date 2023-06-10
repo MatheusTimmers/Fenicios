@@ -1,8 +1,4 @@
 #include "Map.hpp"
-#include "../Graph/Graph.hpp"
-#include <vector>
-#include <math.h>
-#include <string>
 
 using namespace std;
 #ifndef MAP
@@ -16,7 +12,7 @@ Map::Map(int size_x, int size_y, vector<string> *map)
     this->_map = map;
 }
 
-// TODO: Verificar se ta certo, pelo que eu encontrei na net, vector<string> já faz destructor
+// TODO: Verificar se ta certo, pelo que eu encontrei na net, vector<string> já faz destructor sozinho
 Map::~Map()
 {
     delete this->_map;
@@ -42,9 +38,20 @@ void Map::SearchBoat(int *x, int *y)
     }
 }
 
+int Map::IsWater(int x, int y)
+{
+    if (this->_map->at(y)[x] == '.')
+        return 1;
+    
+    // FIXME: Acho que isso aqui não ta certo
+    return (int)INFINITY;
+}
+
 WeightedGraph *Map::ToGraph()
 {
     int total = this->_size_x * this->_size_y;
+    int aux_x = 0;
+    int aux_y = 0;
     WeightedGraph *graph = new WeightedGraph(total);
     for (int i = 0; i < total; i++)
     {
@@ -63,6 +70,16 @@ WeightedGraph *Map::ToGraph()
         // Se o i não for da ultima linha, adiciona o de baixo
         if (i + this->_size_x <= total)
             graph->InsertArc(i, i + this->_size_x);
+
+        graph->AddWeight(i, this->IsWater(aux_x, aux_y));
+
+        // TODO: Achar uma forma melhor
+        aux_x++;
+        if (aux_x == this->_size_x)
+        {
+            aux_x = 0;
+            aux_y++;
+        }
     }
     graph->printGraph();
     return graph;

@@ -3,14 +3,16 @@
 
 #include "../Boat/Boat.hpp"
 #include "../Map/Map.hpp"
+#include "../Queue/Queue.hpp"
 
 class Navigation
 {
     private:
-        Map*  _map;
-        Boat* _boat;
+        WeightedGraph* _graph;
+        Boat*          _boat;
     public:
-        Navigation(Map *map, Boat *Barco);
+        Navigation(WeightedGraph *graph, Boat *boat);
+        void Walk(int nHarbor);
 };
 
 #endif

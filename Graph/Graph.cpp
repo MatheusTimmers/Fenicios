@@ -17,9 +17,8 @@ WeightedGraph::WeightedGraph(int nVertex)
             this->_graph->adj[v] = NULL;
         }
     }
-    catch(const std::exception& e)
+    catch(const std::bad_alloc& e)
     {
-        cout << "tESTE" << endl;
         std::cerr << e.what() << '\n';
     }
 }
@@ -46,6 +45,11 @@ void WeightedGraph::InsertArc(vertex x, vertex y)
     this->_graph->nArc++;
 }
 
+void WeightedGraph::AddWeight(vertex x, int weight)
+{
+    _graph->adj[x]->weight = weight;
+}
+
 // Cria um novo nodo
 Node* WeightedGraph::NewNode(vertex x, Node *next) 
 {
@@ -61,6 +65,18 @@ Node* WeightedGraph::NewNode(vertex x, Node *next)
     {
         std::cerr << e.what() << '\n';
     }                       
+}
+
+// Retorna o numero de arcos
+int WeightedGraph::GetnArc()
+{
+    return this->_graph->nArc;
+}
+
+// Retorna o numero de de vertices
+int WeightedGraph::GetnVertex()
+{
+    return this->_graph->nVertex;
 }
 
 // Faz o Print

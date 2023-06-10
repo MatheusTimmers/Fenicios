@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <math.h>
 #include "../Graph/Graph.hpp"
 #include <string>
 using namespace std;
@@ -24,6 +25,7 @@ public:
     Map(int size_x, int size_y, vector<string> *map);
     ~Map();
     void SearchBoat(int *x, int *y);
+    int  IsWater(int x, int y);
     void CreateMap(vector<string> *map);
     WeightedGraph *ToGraph();
 };

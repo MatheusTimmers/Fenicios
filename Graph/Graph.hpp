@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "../Utils/Utils.hpp"
 using namespace std;
 
 #define vertex int
@@ -12,7 +11,8 @@ using namespace std;
 // Estrutura que representa uma conexão
 struct Node 
 { 
-   vertex x; 
+   vertex x;
+   int weight; 
    Node *next; 
 };
 
@@ -26,15 +26,20 @@ struct Graph
 
 class WeightedGraph
 {
-    private:
+    public:
         Graph *_graph;
 
-    public:
         WeightedGraph(int nVertex);
         ~WeightedGraph();
 
         void  InsertArc(vertex x, vertex y);
+
+        //TODO: IMPLEMETAR OS GETS para ter controle de dados
+        int    GetnArc();
+        int    GetnVertex();
+
         Node* NewNode(vertex x, Node *next);
+        void  AddWeight(vertex x, int weight);
         void  printGraph();
 };
 
