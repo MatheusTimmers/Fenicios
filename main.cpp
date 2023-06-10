@@ -4,6 +4,18 @@
 #include "Boat/Boat.hpp"
 #include "Map/Map.hpp"
 #include "Controller/Navigation.hpp"
+#include <queue>
+
+void print(vector<pair<int, int>> edges)
+{
+    for (int i = 0; i < edges.size(); i++)
+    {
+
+        std::cout << " - number: " << edges.at(i).first << ", index:  " << edges.at(i).second << endl;
+    }
+
+    std::cout << endl;
+}
 
 int main()
 {
@@ -24,20 +36,35 @@ int main()
 
     // Map
     Map *map = new Map(stoi(infoLine[0]), stoi(infoLine[1]), &stringMap);
-    map->SearchBoat(&x, &y);
-    map->ToGraph();
+    vector<pair<int, int>> q = map->search();
+    print(q);
+    Graph *g = map->ToGraph();
 
-    // Boat
-    Boat *boat = new Boat(x, y);
+    vector<int> path;
+    for (int i = 0; i < (q.size() - 1); i++)
+    {
+        // cout << "index " << q.at(i).second << " to " << q.at(i + 1).second << endl;
+        // cout << "number " << q.at(i).first << " to " << q.at(i + 1).first << endl;
 
-    // Controller
-    // Navigation *nav = new Navigation(map, boat);
+        vector<int> p = g->shortestPath(q.at(i).second, q.at(i + 1).second);
+        for (int j = 0; j < p.size(); j++)
+        {
+            // cout << p.at(j) << endl;
+            path.push_back(p.at(j));
+        }
+        cout << endl;
+    }
+    for (int j = (path.size() - 1); j >= 0; j--)
+    {
+        cout << " " << path.at(j);
+    }
+    cout << endl;
 
     // End Timer
     end = clock();
     double elapsed = double(end - start) / double(CLOCKS_PER_SEC);
 
-    cout << "Tempo Total: " << fixed << elapsed << setprecision(5) << endl;
+    std::cout << "Tempo Total: " << fixed << elapsed << setprecision(5) << endl;
 
     return 0;
 }

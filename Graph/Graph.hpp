@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <queue>
 using namespace std;
 
 struct Dot
@@ -14,31 +15,33 @@ struct Dot
 // Structure to represent an edge in the graph
 struct Edge
 {
-    Dot destination;
-    int weight;
+    int source;
+    int destination;
     char destinationValue;
 };
 
 // Weighted Quadgraph class
-class WeightedQuadgraph
+class Graph
 {
-    private:
-        int x;
-        int y;
+private:
+    vector<vector<Edge>> adjacencyList;
+    int generalIndex;
+    int size;
 
-        vector<vector<vector<Edge>>> adjacencyList;
+public:
+    // Constructor
+    Graph(int vertexes);
+    Graph(){};
 
-    public:
-        // Constructor
-        WeightedQuadgraph(int x, int y);
-        WeightedQuadgraph(){};
+    // Add an edge to the graph
+    void addEdge(int source, int destination, char destinationValue);
 
-        // Add an edge to the graph
-        void addEdge(Dot source, Dot destination, char destinationValue, int weight);
+    vector<Edge> getEdges(int vertex);
 
-    vector<Edge> getEdges(int x, int y);
     // Print the graph
     void printGraph();
+
+    vector<int> shortestPath(int startVertex, int endIndex);
 };
 
 #endif // WEIGHTED_QUADGRAPH_HPP

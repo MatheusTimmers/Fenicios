@@ -1,6 +1,6 @@
 #include "Utils.hpp"
 
-vector<string> split (string str, string delimiter) 
+vector<string> split(string str, string delimiter)
 {
     size_t pos_start = 0;
     size_t delim_len = delimiter.length();
@@ -8,24 +8,57 @@ vector<string> split (string str, string delimiter)
     string token;
     vector<string> res;
 
-    while ((pos_end = str.find (delimiter, pos_start)) != string::npos) 
+    while ((pos_end = str.find(delimiter, pos_start)) != string::npos)
     {
-        token = str.substr (pos_start, pos_end - pos_start);
+        token = str.substr(pos_start, pos_end - pos_start);
         pos_start = pos_end + delim_len;
-        res.push_back (token);
+        res.push_back(token);
     }
 
-    res.push_back (str.substr (pos_start));
+    res.push_back(str.substr(pos_start));
     return res;
 }
 
-
-string center(int width, const string& str) {
+string center(int width, const string &str)
+{
     int len = str.length();
-    if(width < len) { return str; }
+    if (width < len)
+    {
+        return str;
+    }
 
     int diff = width - len;
-    int pad1 = diff/2;
+    int pad1 = diff / 2;
     int pad2 = diff - pad1;
     return string(pad1, ' ') + str + string(pad2, ' ');
+}
+
+int partition(vector<pair<int, int>> &arr, int low, int high)
+{
+    int pivot = arr[high].first;
+    int i = (low - 1);
+
+    for (int j = low; j <= high - 1; j++)
+    {
+        if (arr[j].first < pivot)
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+// QuickSort function
+void quickSort(vector<pair<int, int>> &arr, int low, int high)
+{
+    if (low < high)
+    {
+        int pivotIndex = partition(arr, low, high);
+
+        quickSort(arr, low, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, high);
+    }
 }

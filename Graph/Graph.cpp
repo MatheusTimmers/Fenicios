@@ -1,54 +1,116 @@
 #include "Graph.hpp"
 #include <iostream>
+#include <queue>
 using namespace std;
 
 // Constructor
-WeightedQuadgraph::WeightedQuadgraph(int x, int y)
+Graph::Graph(int vertexes)
 {
-    this->x = x;
-    this->y = y;
-
-    this->adjacencyList.resize(y);
-
-    for (int i = 0; i < y; i++)
-    {
-        this->adjacencyList.at(i).resize(x);
-    }
+    size = vertexes;
+    this->adjacencyList.resize(vertexes);
 }
 
 // Add an edge to the graph
-void WeightedQuadgraph::addEdge(Dot source, Dot destination, char destinationValue, int weight)
+void Graph::addEdge(int source, int destination, char destinationValue)
 {
-    //cout << "addEdge(" << source.x << ", " << source.y << ", " << destination.x << ", " << destination.y << ", " << destinationValue << ", " << weight << ")" << endl;
-    Edge edge = {destination, weight, destinationValue};
-    adjacencyList[source.y][source.x].push_back(edge);
+    // std::cout << "(" << source << ", " << destination << ", " << destinationValue << ") " << endl;
+    Edge edge = {source, destination, destinationValue};
+    adjacencyList[source].push_back(edge);
 }
 
-vector<Edge> WeightedQuadgraph::getEdges(int x, int y)
+vector<Edge> Graph::getEdges(int vertex)
 {
-    if (x < this->adjacencyList.size() && y < this->adjacencyList.at(x).size())
+
+    if (vertex < size)
     {
-        return this->adjacencyList.at(x).at(y);
+        return this->adjacencyList.at(vertex);
     }
+
     return vector<Edge>();
 }
 
 // Print the graph
-void WeightedQuadgraph::printGraph()
+void Graph::printGraph()
 {
-    for (int i = 0; i < this->y; i++)
+
+    for (int i = 0; i < this->size; i++)
     {
-        for (int j = 0; j < this->x; j++)
+        std::cout << "Vertex " << i << " --> ";
+
+        for (const Edge &edge : this->adjacencyList.at(i))
         {
-            cout << "Vertex " << i << " x " << j << " --> ";
+            std::cout << "(" << edge.destination << ", " << edge.destinationValue << ") ";
 
-            for (const Edge &edge : this->adjacencyList.at(i).at(j))
+            std::cout << endl;
+        }
+        std::cout << endl;
+    }
+}
+
+vector<int> Graph::shortestPath(int src, int dest)
+{
+    vector<int> path;
+    vector<int> pred(size);
+    vector<int> dist(size);
+    // a queue to maintain queue of vertices whose
+    // adjacency list is to be scanned as per normal
+    // DFS algorithm
+    queue<int> q;
+
+    // boolean array visited[] which stores the
+    // information whether ith vertex is reached
+    // at least once in the Breadth first search
+    vector<bool> visited(size);
+
+    // initially all vertices are unvisited
+    // so v[i] for all i is false
+    // and as no path is yet constructed
+    // dist[i] for all i set to infinity
+    for (int i = 0; i < size; i++)
+    {
+        visited[i] = false;
+        dist[i] = INT_MAX;
+        pred[i] = -1;
+    }
+
+    // now source is first to be visited and
+    // distance from source to itself should be 0
+    visited[src] = true;
+    dist[src] = 0;
+    q.push(src);
+
+    // standard BFS algorithm
+    while (!q.empty())
+    {
+        int u = q.front();
+        q.pop();
+        for (int i = 0; i < this->adjacencyList[u].size(); i++)
+        {
+            int destination = getEdges(u)[i].destination;
+            if (visited[destination] == false)
             {
-                cout << "(" << edge.destination.x << ", " << edge.destination.y << ", " << edge.weight << ", " << edge.destinationValue << ") ";
+                // std::cout << "Visiting - " << u << "->" << destination << endl;
+                visited[destination] = true;
+                dist[destination] = dist[u] + 1;
+                pred[destination] = u;
+                q.push(destination);
 
-                cout << endl;
+                // We stop BFS when we find
+                // destination.
+                if (destination == dest)
+                {
+                    int crawl = dest;
+                    path.push_back(crawl);
+                    while (pred[crawl] != -1)
+                    {
+                        path.push_back(pred[crawl]);
+                        crawl = pred[crawl];
+                    }
+                    return path;
+                }
             }
-            cout << endl;
         }
     }
+
+    return path;
 }

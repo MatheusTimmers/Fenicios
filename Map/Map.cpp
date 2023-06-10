@@ -3,7 +3,7 @@
 #include <vector>
 #include <math.h>
 #include <string>
-
+#include "../Utils/Utils.hpp"
 using namespace std;
 #ifndef MAP
 #define MAP
@@ -15,107 +15,98 @@ Map::Map(int size_y, int size_x, vector<string> *map)
     this->_map = map;
 }
 
-void Map::SearchBoat(int *x, int *y)
+// number, index
+vector<pair<int, int>> Map::search()
 {
+
+    int generalIndex = 0;
+    // number, index
+    vector<pair<int, int>> q;
 
     for (int j = 1; j < this->_map->size(); j++)
     {
-        for (int i = 1; i < this->_map->at(j).size(); i++)
+        for (int i = 0; i < this->_map->at(j).size(); i++)
         {
-            // Procura o primeiro porto do Mapa;
-            if (this->_map->at(j)[i] == '1')
+            int number = atoi(string(1, this->_map->at(j)[i]).c_str());
+            if (number)
             {
-                *x = i;
-                *y = j;
-                cout << "Posicao do barquinho eh " << *x << " e " << *y << endl;
-                return;
+                cout << "adding number " << number << " index " << generalIndex << endl;
+                q.push_back(make_pair(number, generalIndex));
             }
+            generalIndex++;
         }
     }
+
+    quickSort(q, 0, (q.size() - 1));
+
+    return q;
 }
 
-WeightedQuadgraph *Map::ToGraph()
+Graph *Map::ToGraph()
 {
-    WeightedQuadgraph *graph = new WeightedQuadgraph(this->_size_x, this->_size_y);
+    Graph *graph = new Graph(this->_size_x * this->_size_y);
 
+    int generalIndex = -1;
     for (int y = 1; y <= this->_size_y; y++)
     {
         for (int x = 0; x < this->_size_x; x++)
         {
             // cout << this->_size_y << " X " << this->_size_x << endl;
-            // cout << y << " X " << x << endl;
-            // cout << this->_map->at(y) << endl;
+            // cout << "general index " << generalIndex << endl;
+            //  cout << this->_map->at(y) << endl;
+            generalIndex++;
 
             char value = this->_map->at(y)[x];
             if (value == '\0')
             {
-                cout << "break" << endl;
+
                 break;
             }
 
-            char valueTop = this->_map->at(y - 1)[x];
+            if (value == '*')
+            {
+                continue;
+            }
 
             char valueBottom = y == this->_size_y ? '\0' : this->_map->at(y + 1)[x];
-
+            char valueRight = this->_map->at(y)[x + 1];
+            char valueTop = this->_map->at(y - 1)[x];
             char valueLeft = this->_map->at(y)[x - 1];
 
-            char valueRight = this->_map->at(y)[x + 1];
-
-            Dot source;
-            source.x = x;
-            // - 1 para que o seja salvo no grafo a partir do index 0 não 1
-            source.y = y - 1;
-
-            if (y > 1 && valueTop != '\0')
-            {
-                // atribui edge ao nodo de cima
-                int weight = valueTop == '*' ? INFINITY : 1;
-                // cout << "top" << endl;
-                value = this->_map->at(y - 1)[x];
-                Dot destination;
-                destination.x = x;
-                destination.y = y - 2;
-                graph->addEdge(source, destination, value, weight);
-            }
-
-            if (valueRight != '\0')
+            if (valueRight != '\0' && valueRight != '*')
             {
                 // atribui edge da direita
-                // cout << "right " << x << endl;
-                int weight = valueRight == '*' ? INFINITY : 1;
-                value = this->_map->at(y)[x + 1];
-                Dot destination;
-                destination.x = x + 1;
-                destination.y = y - 1;
-                graph->addEdge(source, destination, value, weight);
+                // std::cout << "right " << x << endl;
+
+                graph->addEdge(generalIndex, (generalIndex + 1), valueRight);
             }
 
-            if (valueLeft != '\0')
+            if (valueLeft != '\0' && valueLeft != '*')
             {
-                // atribui edge da esquerda
-                // cout << "left" << endl;
-                value = this->_map->at(y)[x - 1];
-                int weight = valueLeft == '*' ? INFINITY : 1;
-                Dot destination;
-                destination.x = x - 1;
-                destination.y = y - 1;
-                graph->addEdge(source, destination, value, weight);
+                // atribui edge da direita
+                // std::cout << "right " << x << endl;
+
+                graph->addEdge(generalIndex, (generalIndex - 1), valueLeft);
             }
 
-            if (valueBottom != '\0')
+            if (valueBottom != '\0' && valueBottom != '*')
             {
-                // atribui edge de baixo
+                // atribui edge de baixoc
                 // cout << "bottom" << endl;
-                value = this->_map->at(y + 1)[x];
-                int weight = valueBottom == '*' ? INFINITY : 1;
-                Dot destination;
-                destination.x = x;
-                destination.y = y;
-                graph->addEdge(source, destination, value, weight);
+
+                graph->addEdge(generalIndex, generalIndex + this->_size_x, valueBottom);
+            }
+
+            if (y > 1 && valueTop != '\0' && valueTop != '*')
+            {
+                // atribui edge de baixoc
+                // cout << "bottom" << endl;
+
+                graph->addEdge(generalIndex, generalIndex - this->_size_x, valueTop);
             }
         }
     }
-    graph->printGraph();
+
     return graph;
 }
 #endif

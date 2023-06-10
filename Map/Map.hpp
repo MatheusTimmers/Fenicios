@@ -22,9 +22,9 @@ private:
 
 public:
     Map(int size_y, int size_x, vector<string> *map);
-    void SearchBoat(int *x, int *y);
+    vector<pair<int, int>> search();
     void CreateMap(vector<string> *map);
-    WeightedQuadgraph *ToGraph();
+    Graph *ToGraph();
 };
 
 #endif
