@@ -1,6 +1,7 @@
 #include "Graph.hpp"
 #include <iostream>
 #include <queue>
+#define INT_MAX 9999999
 using namespace std;
 
 // Constructor
