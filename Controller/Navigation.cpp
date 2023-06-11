@@ -2,34 +2,46 @@
 
 Navigation::Navigation(WeightedGraph *graph, Boat *boat)
 {
-    this->_graph = graph;
-    this->_boat  = boat;
+    this->_graph   = graph;
+    this->_boat    = boat;
+    this->_dist    = new int[this->_graph->GetnVertex()];
+    this->_fathers = new vector<int>(this->_graph->GetnVertex()); 
 }
 
-void Navigation::Walk(int nHarbor)
+// Função que procura o menor caminho entre @param START @param END
+// Usando a distancia em relação a origem e uma lista de antecessores para cada vertice
+void Navigation::Caronte(vertex start)
 {
-    // Cria variaveis
-    int num[this->_graph->GetnVertex()];
-    int cnt = 0;
-    Queue<int> *queue = new Queue<int>(this->_graph->GetnVertex());
+    // Variaveis
+    const int max      = this->_graph->GetnVertex();
+    queue<int> *queueR = new queue<int>;
 
-    for (vertex v = 0; v < this->_graph->GetnVertex(); ++v)
+    // Inicialização
+    for (vertex v = 0; v < this->_graph->GetnVertex(); ++v) 
     {
-        num[v] = -1;
+        this->_dist[v]        = max; 
+        this->_fathers->at(v) = -1;
     }
+    
+    this->_dist[start]        = 0; 
+    this->_fathers->at(start) = start;
+    queueR->push(start); 
 
-    num[nHarbor] = cnt++; 
-    queue->Insert(nHarbor); 
-
-    while (!queue->IsEmpty()) 
+    while (!queueR->empty()) 
     {
-        vertex v = queue->Remove(); 
-        for (Node* n = this->_graph->_graph->adj[v]; n != NULL; n = n->next)
+        vertex v = queueR->front(); 
+        queueR->pop();
+
+        // Visita todos as adjacencias de um vertice, e atribui uma distancia em relação a origem
+        // Salva o pai para cada um dos vertices 
+        for (Node* n = this->_graph->GetAdj(v); n != NULL; n = n->next)
         {
-            if (num[n->x] == -1) 
+            vertex x = n->x; 
+            if (this->_dist[x] == max) 
             {
-                num[n->x] = cnt++; 
-                queue->Insert(n->x); 
+                this->_dist[x]        = this->_dist[v] + 1; 
+                this->_fathers->at(x) = v;
+                queueR->push(x); 
             }
         }
     }

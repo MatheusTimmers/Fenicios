@@ -45,11 +45,6 @@ void WeightedGraph::InsertArc(vertex x, vertex y)
     this->_graph->nArc++;
 }
 
-void WeightedGraph::AddWeight(vertex x, int weight)
-{
-    _graph->adj[x]->weight = weight;
-}
-
 // Cria um novo nodo
 Node* WeightedGraph::NewNode(vertex x, Node *next) 
 {
@@ -77,6 +72,11 @@ int WeightedGraph::GetnArc()
 int WeightedGraph::GetnVertex()
 {
     return this->_graph->nVertex;
+}
+
+Node* WeightedGraph::GetAdj(vertex x)
+{
+    return this->_graph->adj[x];
 }
 
 // Faz o Print

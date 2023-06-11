@@ -17,6 +17,11 @@ vector<string> split (string str, string delimiter){
     return res;
 }
 
+int GetListPos(int x, int y, int size_x)
+{
+    return (y) * size_x + (x - 1);
+}
+
 
 string center(int width, const string& str) {
     int len = str.length();
