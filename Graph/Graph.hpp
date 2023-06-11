@@ -12,7 +12,6 @@ using namespace std;
 struct Node 
 { 
    vertex x;
-   int weight; 
    Node *next; 
 };
 
@@ -26,20 +25,21 @@ struct Graph
 
 class WeightedGraph
 {
-    public:
+    private:
         Graph *_graph;
+
+    public:
 
         WeightedGraph(int nVertex);
         ~WeightedGraph();
 
         void  InsertArc(vertex x, vertex y);
 
-        //TODO: IMPLEMETAR OS GETS para ter controle de dados
         int    GetnArc();
         int    GetnVertex();
+        Node*  GetAdj(vertex x);
 
         Node* NewNode(vertex x, Node *next);
-        void  AddWeight(vertex x, int weight);
         void  printGraph();
 };
 

@@ -1,11 +1,11 @@
 main:
 	@echo Compilando
-	@g++ main.cpp Controller/Navigation.cpp Graph/Graph.cpp Queue/Queue.cpp File/File.cpp Utils/Utils.cpp Map/Map.cpp Boat/Boat.cpp -o run.exe
+	@g++ main.cpp Controller/Navigation.cpp Graph/Graph.cpp File/File.cpp Utils/Utils.cpp Map/Map.cpp Boat/Boat.cpp -o run.exe
 	run
 
 debug:
 	@echo Compilando
-	@g++ -g -std=c++0x main.cpp File/File.cpp Utils/Utils.cpp Map/Map.cpp Boat/Boat.cpp -o run.exe -o run.exe
+	@g++ -g -std=c++0x main.cpp Controller/Navigation.cpp Graph/Graph.cpp File/File.cpp Utils/Utils.cpp Map/Map.cpp Boat/Boat.cpp -o run.exe
 	run
 
 

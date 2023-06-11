@@ -38,48 +38,39 @@ void Map::SearchBoat(int *x, int *y)
     }
 }
 
-int Map::IsWater(int x, int y)
+// verifica se a pos x é agua
+bool Map::IsWater(int x)
 {
-    if (this->_map->at(y)[x] == '.')
-        return 1;
+    if (this->_map->at(x / this->_size_x)[x % this->_size_x] == '.')
+        return true;
     
-    // FIXME: Acho que isso aqui não ta certo
-    return (int)INFINITY;
+    return false;
 }
 
+// Transforma o map em um grafo
 WeightedGraph *Map::ToGraph()
 {
     int total = this->_size_x * this->_size_y;
-    int aux_x = 0;
-    int aux_y = 0;
     WeightedGraph *graph = new WeightedGraph(total);
+
     for (int i = 0; i < total; i++)
     {
+        // Só adiciona arco se o mesmo for agua
         // Se o i não for o ultimo nodo, adiciona o próximo
-        if (i+1 <= total)
-            graph->InsertArc(i, i+1);
-         
+        if (i+1 < total && IsWater(i + 1))
+            graph->InsertArc(i, i + 1);
+        
         // Se o i não for o primeiro nodo, adiciona o anterior
-        if (i-1 >= 0)
-            graph->InsertArc(i, i-1);
+        if (i-1 >= 0 && IsWater(i - 1))
+            graph->InsertArc(i, i - 1);
         
         // Se o i não for da primeira linha, adiciona o de cima
-        if (i - this->_size_x >= 0)
+        if (i - this->_size_x >= 0 && IsWater(i - this->_size_x))
             graph->InsertArc(i, i - this->_size_x);
         
         // Se o i não for da ultima linha, adiciona o de baixo
-        if (i + this->_size_x <= total)
+        if (i + this->_size_x < total && IsWater(i + this->_size_x))
             graph->InsertArc(i, i + this->_size_x);
-
-        graph->AddWeight(i, this->IsWater(aux_x, aux_y));
-
-        // TODO: Achar uma forma melhor
-        aux_x++;
-        if (aux_x == this->_size_x)
-        {
-            aux_x = 0;
-            aux_y++;
-        }
     }
     graph->printGraph();
     return graph;

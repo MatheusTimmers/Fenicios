@@ -25,8 +25,11 @@ public:
     Map(int size_x, int size_y, vector<string> *map);
     ~Map();
     void SearchBoat(int *x, int *y);
-    int  IsWater(int x, int y);
+    bool  IsWater(int x);
     void CreateMap(vector<string> *map);
+
+    int GetSizeX() { return _size_x; };
+    int GetSizeY() { return _size_y; };
     WeightedGraph *ToGraph();
 };
 
