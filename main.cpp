@@ -50,16 +50,13 @@ int main()
         {
             for (int j = p.size() - 1; j >= 0; j--)
             {
-                // cout << p.at(j) << " ";
                 path.push_back(p.at(j));
             }
         }
         else
         {
-            // cout << "Não é possível alcançar este porto." << endl;
+            cout << "Não é possível alcançar o porto " << q.at(i + 1).first << endl;
         }
-        // cout << endl
-        //      << endl;
     }
 
     cout << "Combustível necessário para a jornada: " << path.size() << endl;
@@ -71,47 +68,7 @@ int main()
     std::cout << endl;
     std::cout << "Tempo de processamento: " << fixed << elapsed << setprecision(5) << endl;
 
-    // for (int j = 0; j < path.size(); j++)
-    // {
-    //     cout << " " << path.at(j);
-    // }
-
     cout << endl;
-
-    // int generalIndex = 0;
-    // for (int y = 1; y < stringMap.size(); y++)
-    // {
-    //     for (int x = 0; x < stringMap.at(y).size(); x++)
-    //     {
-    //         bool included = false;
-    //         for (int i = 0; i < path.size(); i++)
-    //         {
-    //             if (path.at(i) == generalIndex)
-    //             {
-    //                 included = true;
-    //             }
-    //         }
-
-    //         if (included)
-    //         {
-    //             if (atoi(string(1, stringMap.at(y).at(x)).c_str()))
-    //             {
-    //                 cout << stringMap.at(y).at(x);
-    //             }
-    //             else
-    //             {
-    //                 cout << ">";
-    //             }
-    //         }
-    //         else
-    //         {
-    //             cout << stringMap.at(y).at(x);
-    //         }
-
-    //         generalIndex++;
-    //     }
-    //     cout << endl;
-    // }
 
     return 0;
 }
