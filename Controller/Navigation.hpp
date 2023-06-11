@@ -3,14 +3,26 @@
 
 #include "../Boat/Boat.hpp"
 #include "../Map/Map.hpp"
+#include <queue>
+#include <algorithm>
 
 class Navigation
 {
     private:
-        Map*  _map;
-        Boat* _boat;
+        WeightedGraph*  _graph;
+        Boat*           _boat;
+        int*            _dist;
+        vector<vertex>* _fathers;
+
     public:
-        Navigation(Map *map, Boat *Barco);
+        Navigation(WeightedGraph *graph, Boat *boat);
+        void Caronte(vertex start);
+
+        int             GetDist(vertex i)   { return this->_dist[i]; };
+        vertex          GetParent(vertex i) { return this->_fathers->at(i); };
+        int*            GetDist()           { return this->_dist; };
+        vector<vertex>* GetParent() { return this->_fathers; };
+
 };
 
 #endif

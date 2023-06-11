@@ -1,15 +1,13 @@
 #include "Utils.hpp"
 
-vector<string> split (string str, string delimiter) 
-{
+vector<string> split (string str, string delimiter){
     size_t pos_start = 0;
     size_t delim_len = delimiter.length();
     size_t pos_end;
     string token;
     vector<string> res;
 
-    while ((pos_end = str.find (delimiter, pos_start)) != string::npos) 
-    {
+    while ((pos_end = str.find (delimiter, pos_start)) != string::npos){
         token = str.substr (pos_start, pos_end - pos_start);
         pos_start = pos_end + delim_len;
         res.push_back (token);
@@ -17,6 +15,11 @@ vector<string> split (string str, string delimiter)
 
     res.push_back (str.substr (pos_start));
     return res;
+}
+
+int GetListPos(int x, int y, int size_x)
+{
+    return (y) * size_x + (x - 1);
 }
 
 
