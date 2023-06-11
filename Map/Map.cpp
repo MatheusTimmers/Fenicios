@@ -30,7 +30,7 @@ vector<pair<int, int>> Map::search()
             int number = atoi(string(1, this->_map->at(j)[i]).c_str());
             if (number)
             {
-                cout << "adding number " << number << " index " << generalIndex << endl;
+                // cout << "adding number " << number << " index " << generalIndex << endl;
                 q.push_back(make_pair(number, generalIndex));
             }
             generalIndex++;
