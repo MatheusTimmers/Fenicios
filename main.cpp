@@ -30,7 +30,7 @@ int main()
     vector<string> stringMap;
 
     // Pega o Arquivo
-    File *file = new File("case1.map");
+    File *file = new File("case5.map");
     infoLine = file->GetLine();
     stringMap = file->GetLines();
 
@@ -56,6 +56,7 @@ int main()
         else
         {
             cout << "Não é possível alcançar o porto " << q.at(i + 1).first << endl;
+            q.at(i + 1) = q.at(i);
         }
     }
 
