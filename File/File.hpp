@@ -14,14 +14,12 @@ private:
     string _name;
     fstream _file;
     void OpenRead();
-    void OpenWrite();
 
 public:
     File(string name);
     vector<string> GetLine();
     vector<string> GetLines();
     int GetLinesAmount();
-    void write(string s);
 };
 
 #endif

@@ -65,7 +65,3 @@ int File::GetLinesAmount()
     this->_file.close();
     return count;
 }
-
-void File::write(string s)
-{
-}

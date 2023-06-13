@@ -42,7 +42,7 @@ vector<pair<int, int>> Map::search()
     return q;
 }
 
-Graph *Map::ToGraph()
+Graph *Map::toGraph()
 {
     Graph *graph = new Graph(this->_size_x * this->_size_y);
 
@@ -51,22 +51,14 @@ Graph *Map::ToGraph()
     {
         for (int x = 0; x < this->_size_x; x++)
         {
-            // cout << this->_size_y << " X " << this->_size_x << endl;
-            // cout << "general index " << generalIndex << endl;
-            //  cout << this->_map->at(y) << endl;
             generalIndex++;
 
             char value = this->_map->at(y)[x];
             if (value == '\0')
-            {
-
                 break;
-            }
 
             if (value == '*')
-            {
                 continue;
-            }
 
             char valueBottom = y == this->_size_y ? '\0' : this->_map->at(y + 1)[x];
             char valueRight = this->_map->at(y)[x + 1];
@@ -75,33 +67,21 @@ Graph *Map::ToGraph()
 
             if (valueRight != '\0' && valueRight != '*')
             {
-                // atribui edge da direita
-                // std::cout << "right " << x << endl;
-
                 graph->addEdge(generalIndex, (generalIndex + 1), valueRight);
             }
 
             if (valueLeft != '\0' && valueLeft != '*')
             {
-                // atribui edge da direita
-                // std::cout << "right " << x << endl;
-
                 graph->addEdge(generalIndex, (generalIndex - 1), valueLeft);
             }
 
             if (valueBottom != '\0' && valueBottom != '*')
             {
-                // atribui edge de baixoc
-                // cout << "bottom" << endl;
-
                 graph->addEdge(generalIndex, generalIndex + this->_size_x, valueBottom);
             }
 
             if (y > 1 && valueTop != '\0' && valueTop != '*')
             {
-                // atribui edge de baixoc
-                // cout << "bottom" << endl;
-
                 graph->addEdge(generalIndex, generalIndex - this->_size_x, valueTop);
             }
         }

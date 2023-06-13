@@ -30,7 +30,9 @@ int main()
     vector<string> stringMap;
 
     // Pega o Arquivo
-    File *file = new File("case1.map");
+    string fileName;
+    std::cin >> fileName;
+    File *file = new File(fileName);
     infoLine = file->GetLine();
     stringMap = file->GetLines();
 
@@ -38,7 +40,7 @@ int main()
     Map *map = new Map(stoi(infoLine[0]), stoi(infoLine[1]), &stringMap);
     vector<pair<int, int>> q = map->search();
     q.push_back(make_pair(q.at(0).first, q.at(0).second));
-    Graph *g = map->ToGraph();
+    Graph *g = map->toGraph();
     vector<int> path;
     for (int i = 0; i < (q.size() - 1); i++)
     {

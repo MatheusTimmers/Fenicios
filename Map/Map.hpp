@@ -6,13 +6,6 @@
 #include "../Graph/Graph.hpp"
 #include <string>
 using namespace std;
-
-struct Pixel
-{
-    bool isWater;
-    Pixel **pixels;
-};
-
 class Map
 {
 private:
@@ -23,8 +16,7 @@ private:
 public:
     Map(int size_y, int size_x, vector<string> *map);
     vector<pair<int, int>> search();
-    void CreateMap(vector<string> *map);
-    Graph *ToGraph();
+    Graph *toGraph();
 };
 
 #endif

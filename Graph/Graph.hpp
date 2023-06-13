@@ -7,11 +7,6 @@
 #include <queue>
 using namespace std;
 
-struct Dot
-{
-    int x, y;
-};
-
 // Structure to represent an edge in the graph
 struct Edge
 {
@@ -29,16 +24,13 @@ private:
     int size;
 
 public:
-    // Constructor
     Graph(int vertexes);
     Graph(){};
 
-    // Add an edge to the graph
     void addEdge(int source, int destination, char destinationValue);
 
     vector<Edge> getEdges(int vertex);
 
-    // Print the graph
     void printGraph();
 
     vector<int> shortestPath(int startVertex, int endIndex);
