@@ -1,6 +1,7 @@
 #include "Graph.hpp"
 #include <iostream>
 #include <queue>
+#define MAX 9999999
 using namespace std;
 
 // Constructor
@@ -69,7 +70,7 @@ vector<int> Graph::shortestPath(int src, int dest)
     for (int i = 0; i < size; i++)
     {
         visited[i] = false;
-        dist[i] = INT_MAX;
+        dist[i] = MAX;
         pred[i] = -1;
     }
 
