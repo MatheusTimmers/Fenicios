@@ -65,12 +65,12 @@ Graph *Map::toGraph()
             char valueTop = this->_map->at(y - 1)[x];
             char valueLeft = this->_map->at(y)[x - 1];
 
-            if (valueRight != '\0' && valueRight != '*')
+            if (x < this->_size_x && valueRight != '\0' && valueRight != '*')
             {
                 graph->addEdge(generalIndex, (generalIndex + 1), valueRight);
             }
 
-            if (valueLeft != '\0' && valueLeft != '*')
+            if (x > 0 && valueLeft != '\0' && valueLeft != '*')
             {
                 graph->addEdge(generalIndex, (generalIndex - 1), valueLeft);
             }
