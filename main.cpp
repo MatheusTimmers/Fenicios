@@ -30,7 +30,7 @@ int main()
     vector<string> stringMap;
 
     // Pega o Arquivo
-    File *file = new File("case1.map");
+    File *file = new File("case5.map");
     infoLine = file->GetLine();
     stringMap = file->GetLines();
 
@@ -43,11 +43,12 @@ int main()
     for (int i = 0; i < (q.size() - 1); i++)
     {
 
-        // cout << "Caminho porto " << q.at(i).first << " para porto " << q.at(i + 1).first << endl;
+        cout << "Caminho porto " << q.at(i).first << " para porto " << q.at(i + 1).first << endl;
 
         vector<int> p = g->shortestPath(q.at(i).second, q.at(i + 1).second);
         if (p.size())
         {
+            cout << p.size() << " combustivel" << endl;
             for (int j = p.size() - 1; j >= 0; j--)
             {
                 path.push_back(p.at(j));
