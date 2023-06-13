@@ -5,9 +5,10 @@
 #include <vector>
 #include <string>
 #include <queue>
+#define MAX 9999999
 using namespace std;
 
-// Structure to represent an edge in the graph
+// Estrutura que representa um edge do grafo
 struct Edge
 {
     int source;
@@ -15,25 +16,24 @@ struct Edge
     char destinationValue;
 };
 
-// Weighted Quadgraph class
 class Graph
 {
-private:
-    vector<vector<Edge>> adjacencyList;
-    int generalIndex;
-    int size;
+    private:
+        vector<vector<Edge>> adjacencyList;
+        int generalIndex;
+        int size;
 
-public:
-    Graph(int vertexes);
-    Graph(){};
+    public:
+        Graph(int vertexes);
+        Graph(){};
 
-    void addEdge(int source, int destination, char destinationValue);
+        void addEdge(int source, int destination, char destinationValue);
 
-    vector<Edge> getEdges(int vertex);
+        vector<Edge> getEdges(int vertex);
 
-    void printGraph();
+        void printGraph();
 
-    vector<int> shortestPath(int startVertex, int endIndex);
+        vector<int> shortestPath(int startVertex, int endIndex);
 };
 
 #endif // WEIGHTED_QUADGRAPH_HPP

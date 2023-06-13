@@ -1,12 +1,5 @@
 #include "Map.hpp"
-#include "../Graph/Graph.hpp"
-#include <vector>
-#include <math.h>
-#include <string>
-#include "../Utils/Utils.hpp"
-using namespace std;
-#ifndef MAP
-#define MAP
+
 Map::Map(int size_y, int size_x, vector<string> *map)
 {
 
@@ -18,7 +11,6 @@ Map::Map(int size_y, int size_x, vector<string> *map)
 // number, index
 vector<pair<int, int>> Map::search()
 {
-
     int generalIndex = 0;
     // number, index
     vector<pair<int, int>> q;
@@ -36,7 +28,6 @@ vector<pair<int, int>> Map::search()
             generalIndex++;
         }
     }
-
     quickSort(q, 0, (q.size() - 1));
 
     return q;
@@ -52,8 +43,8 @@ Graph *Map::toGraph()
         for (int x = 0; x < this->_size_x; x++)
         {
             generalIndex++;
-
             char value = this->_map->at(y)[x];
+
             if (value == '\0')
                 break;
 
@@ -61,9 +52,9 @@ Graph *Map::toGraph()
                 continue;
 
             char valueBottom = y == this->_size_y ? '\0' : this->_map->at(y + 1)[x];
-            char valueRight = this->_map->at(y)[x + 1];
-            char valueTop = this->_map->at(y - 1)[x];
-            char valueLeft = this->_map->at(y)[x - 1];
+            char valueRight  = this->_map->at(y)[x + 1];
+            char valueTop    = this->_map->at(y - 1)[x];
+            char valueLeft   = this->_map->at(y)[x - 1];
 
             if (x < this->_size_x && valueRight != '\0' && valueRight != '*')
             {
@@ -89,4 +80,3 @@ Graph *Map::toGraph()
 
     return graph;
 }
-#endif

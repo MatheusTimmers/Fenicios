@@ -1,21 +1,7 @@
 #include "File/File.hpp"
 #include <time.h>
 #include <iomanip>
-#include "Boat/Boat.hpp"
 #include "Map/Map.hpp"
-#include "Controller/Navigation.hpp"
-#include <queue>
-
-void print(vector<pair<int, int>> edges)
-{
-    for (int i = 0; i < edges.size(); i++)
-    {
-
-        std::cout << " - number: " << edges.at(i).first << ", index:  " << edges.at(i).second << endl;
-    }
-
-    std::cout << endl;
-}
 
 int main()
 {
@@ -37,9 +23,11 @@ int main()
     // Map
     Map *map = new Map(stoi(infoLine[0]), stoi(infoLine[1]), &stringMap);
     vector<pair<int, int>> q = map->search();
+
     q.push_back(make_pair(q.at(0).first, q.at(0).second));
     Graph *g = map->toGraph();
     vector<int> path;
+
     for (int i = 0; i < (q.size() - 1); i++)
     {
 
